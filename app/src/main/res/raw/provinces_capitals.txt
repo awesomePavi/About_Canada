@@ -1,0 +1,29 @@
+H--Canada's Province's:
+B--Nova Scotia
+P--Capital: Halifax
+B--Prince Edward Island
+P--Charlottetown
+B--New Brunswick
+P--Fredericton
+B--Newfoundland and Labrador
+P--St. John's
+B--Quebec
+P--Quebec City
+B--Ontario
+P--Toronto
+B--Manitoba
+P--Winnipeg
+B--Sasketchwan
+P--Regina
+B--Alberta
+P--Edmonton
+B--British Columbia
+P--Victoria
+
+H--Canada Territories:
+B--Nunavut
+P--Iqaluit
+B--Northwest Territories
+P--Yellowknife
+B--Yukon
+P--Whitehorse

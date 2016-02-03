@@ -1,11 +1,10 @@
 package bitpot.aboutcanada;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.graphics.Color;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.TypedValue;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,28 +16,24 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
-import bitpot.aboutcanada.recyclerview.LandmarkInfo;
 import bitpot.aboutcanada.util.Utils;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link LandmarksFragment.OnFragmentInteractionListener} interface
+ * {@link ProvincesCapitalsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link LandmarksFragment#newInstance} factory method to
+ * Use the {@link ProvincesCapitalsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LandmarksFragment extends android.support.v4.app.Fragment
+public class ProvincesCapitalsFragment extends android.support.v4.app.Fragment
 {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    private ArrayList<LandmarkInfo> landmarkInfoArrayList;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -46,28 +41,29 @@ public class LandmarksFragment extends android.support.v4.app.Fragment
 
     private OnFragmentInteractionListener mListener;
 
+    public ProvincesCapitalsFragment()
+    {
+        // Required empty public constructor
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment LandmarksFragment.
+     * @return A new instance of fragment ProvincesCapitalsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LandmarksFragment newInstance(String param1, String param2)
+    public static ProvincesCapitalsFragment newInstance(String param1, String
+            param2)
     {
-        LandmarksFragment fragment = new LandmarksFragment();
+        ProvincesCapitalsFragment fragment = new ProvincesCapitalsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public LandmarksFragment()
-    {
-        // Default constructor
     }
 
     @Override
@@ -85,87 +81,46 @@ public class LandmarksFragment extends android.support.v4.app.Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_landmarks, null);
-        dispFileText((LinearLayout) view.findViewById(R.id.fragCityLinLay));
-        return view;
+        View view = inflater.inflate(R.layout.fragment_provinces_capitals, null);
+        dispFileText((LinearLayout) view.findViewById(R.id.provincesCapital_ll));
+
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_provinces_capitals,
+                container, false);
     }
 
     public void dispFileText(LinearLayout ll)
     {
-        InputStream is = getResources().openRawResource(R.raw.landmarks);
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        InputStream inStream = getResources().openRawResource(R.raw
+                .provinces_capitals);
+        BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
         String line;
         TextView tv;
         ImageView imageView;
-        String entireFile = "";
 
-        int[] drawables = {R.drawable.lm1, R.drawable.lm2, R.drawable.lm3, R
-                .drawable.lm4,
-                R.drawable.lm5, R.drawable.lm6, R.drawable.lm7, R.drawable
-                .lm8, R.drawable.lm9,
-                R.drawable.lm10};
+        int[] drawables = {R.drawable.flag_ontario, R.drawable.flag_quebec};
 
         try
         {
-            for (int i = 0; i < 10; i++)
+            int lineNum = 0;
+//            while(br.readLine() != null)
+            while(lineNum < 2 && br.readLine() != null)
             {
-
-                String path = "R.drawable.lm";
-
                 imageView = new ImageView(getActivity());
                 imageView.setImageBitmap(Utils
                         .decodeSampledBitmapFromResource(getResources(),
-                                drawables[i], 200, 200));
+                                drawables[lineNum], 200, 200));
                 imageView.setScaleType(ImageView.ScaleType.CENTER);
                 imageView.setAdjustViewBounds(true);
                 imageView.setPadding(0, 24, 0, 0);
                 ll.addView(imageView);
 
-                tv = new TextView(getActivity());
-
-                if ((line = br.readLine()).length() > 0)
-                {
-                    tv.setText(line.substring(3, line.length()));
-                }
-
-                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 35);
-                tv.setTextColor(Color.parseColor(getResources().getString(R
-                        .string.font_header)));
-                tv.setPadding((int) (15 * getResources().getDisplayMetrics()
-                        .density), (int) (5 * getResources()
-                        .getDisplayMetrics().density), (int) (15 *
-                        getResources().getDisplayMetrics().density), (int) (5
-                        * getResources().getDisplayMetrics().density));
-
-                ViewGroup.LayoutParams layout = new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
-                        .LayoutParams.MATCH_PARENT);
-
-                ll.addView(tv);
-                if (line.length() <= 0)
-                {
-                }
-                for (int j = 0; j < 3; j++)
-                {
-                    line = br.readLine();
-                    tv = new TextView(getActivity());
-                    tv.setText("   • " + line.substring(3, line.length()));
-                    tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-                    tv.setTextColor(Color.parseColor(getResources().getString
-                            (R.string.font_body)));
-                    tv.setPadding((int) (10 * getResources()
-                            .getDisplayMetrics().density), 0, (int) (10 *
-                            getResources().getDisplayMetrics().density), 0);
-                    tv.setLayoutParams(layout);
-                    ll.addView(tv);
-                }
-
+                lineNum++;
             }
-            br.close();
+
         }
         catch (IOException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -180,19 +135,32 @@ public class LandmarksFragment extends android.support.v4.app.Fragment
     }
 
     @Override
-    public void onAttach(Activity activity)
+    public void onAttach(Context context)
     {
-        super.onAttach(activity);
-        try
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener)
         {
-            mListener = (OnFragmentInteractionListener) activity;
-        }
-        catch (ClassCastException e)
+            mListener = (OnFragmentInteractionListener) context;
+        } else
         {
-            throw new ClassCastException(activity.toString()
+            throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
     }
+//@Override
+//public void onAttach(Activity activity)
+//{
+//    super.onAttach(activity);
+//    try
+//    {
+//        mListener = (OnFragmentInteractionListener) activity;
+//    }
+//    catch (ClassCastException e)
+//    {
+//        throw new ClassCastException(activity.toString()
+//                + " must implement OnFragmentInteractionListener");
+//    }
+//}
 
     @Override
     public void onDetach()
@@ -215,7 +183,6 @@ public class LandmarksFragment extends android.support.v4.app.Fragment
     public interface OnFragmentInteractionListener
     {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
-
 }

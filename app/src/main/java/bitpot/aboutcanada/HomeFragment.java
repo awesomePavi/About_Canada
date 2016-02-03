@@ -27,7 +27,8 @@ import java.util.Calendar;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends android.support.v4.app.Fragment {
+public class HomeFragment extends android.support.v4.app.Fragment
+{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -48,7 +49,8 @@ public class HomeFragment extends android.support.v4.app.Fragment {
      * @return A new instance of fragment HomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
+    public static HomeFragment newInstance(String param1, String param2)
+    {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -57,14 +59,17 @@ public class HomeFragment extends android.support.v4.app.Fragment {
         return fragment;
     }
 
-    public HomeFragment() {
+    public HomeFragment()
+    {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null)
+        {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -72,87 +77,126 @@ public class HomeFragment extends android.support.v4.app.Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_about_cities, null);
         DispFileText((LinearLayout) view.findViewById(R.id.fragCityLinLay));
         return view;
     }
 
 
-
-    public void DispFileText(LinearLayout ll){
+    public void DispFileText(LinearLayout ll)
+    {
         InputStream is = getResources().openRawResource(R.raw.home);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String line;
         String entireFile = "";
 
-        try {
-            while((line = br.readLine()) != null) { // <--------- place readLine() inside loop
-                // entireFile += (line + "\n"); // <---------- add each line to entireFile
+        try
+        {
+            while ((line = br.readLine()) != null)
+            { // <--------- place readLine() inside loop
+                // entireFile += (line + "\n"); // <---------- add each line
+                // to entireFile
                 TextView tv = new TextView(getActivity());
-                if (line.length() > 0) {
+                if (line.length() > 0)
+                {
                     tv.setText(line.substring(3, line.length()));
                 }
                 Calendar c = Calendar.getInstance();
                 int seconds = c.get(Calendar.SECOND);
 
-                ViewGroup.LayoutParams layout = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                if (line.length() <= 0) {
+                ViewGroup.LayoutParams layout = new ViewGroup.LayoutParams
+                        (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+                                .LayoutParams.MATCH_PARENT);
+                if (line.length() <= 0)
+                {
 
-                }
-                else {
+                } else
+                {
 
-                    if (line.substring(0, 3).equals("H--")) {
+                    if (line.substring(0, 3).equals("H--"))
+                    {
                         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
-                        tv.setTextColor(Color.parseColor(getResources().getString(R.string.font_header)));
-                        tv.setPadding((int) (15 * getResources().getDisplayMetrics().density), (int) (5 * getResources().getDisplayMetrics().density), (int) (15 * getResources().getDisplayMetrics().density), (int) (5 * getResources().getDisplayMetrics().density));
-                    } else if (line.substring(0, 3).equals("P--")) {
+                        tv.setTextColor(Color.parseColor(getResources()
+                                .getString(R.string.font_header)));
+                        tv.setPadding((int) (15 * getResources()
+                                .getDisplayMetrics().density), (int) (5 *
+                                getResources().getDisplayMetrics().density),
+                                (int) (15 * getResources().getDisplayMetrics
+                                        ().density), (int) (5 * getResources
+                                        ().getDisplayMetrics().density));
+                    } else if (line.substring(0, 3).equals("P--"))
+                    {
                         tv.setText("   • " + line.substring(3, line.length()));
                         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-                        tv.setTextColor(Color.parseColor(getResources().getString(R.string.font_body)));
-                        tv.setPadding((int) (10 * getResources().getDisplayMetrics().density), 0, (int) (10 * getResources().getDisplayMetrics().density), 0);
-                    } else {
+                        tv.setTextColor(Color.parseColor(getResources()
+                                .getString(R.string.font_body)));
+                        tv.setPadding((int) (10 * getResources()
+                                .getDisplayMetrics().density), 0, (int) (10 *
+                                getResources().getDisplayMetrics().density), 0);
+                    } else
+                    {
                         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-                        tv.setTextColor(Color.parseColor(getResources().getString(R.string.font_body)));
-                        tv.setPadding((int) (10 * getResources().getDisplayMetrics().density), 0, (int) (10 * getResources().getDisplayMetrics().density), 0);
+                        tv.setTextColor(Color.parseColor(getResources()
+                                .getString(R.string.font_body)));
+                        tv.setPadding((int) (10 * getResources()
+                                .getDisplayMetrics().density), 0, (int) (10 *
+                                getResources().getDisplayMetrics().density), 0);
                     }
                     tv.setLayoutParams(layout);
                     ll.addView(tv);
-                    if (line.substring(0, 3).equals("H--")) {
+                    if (line.substring(0, 3).equals("H--"))
+                    {
                         View lineDr = new View(getActivity());
-                        ViewGroup.LayoutParams linelay = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+                        ViewGroup.LayoutParams linelay = new ViewGroup
+                                .LayoutParams(ViewGroup.LayoutParams
+                                .MATCH_PARENT, 1);
                         lineDr.setLayoutParams(linelay);
-                        lineDr.setBackgroundColor(Color.parseColor(getResources().getString(R.string.line_header)));
+                        lineDr.setBackgroundColor(Color.parseColor
+                                (getResources().getString(R.string
+                                        .line_header)));
                         ll.addView(lineDr);
                     }
                 }
             }
-        } catch (IOException e) {
+
+            br.close();
+        }
+        catch (IOException e)
+        {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
+    public void onButtonPressed(Uri uri)
+    {
+        if (mListener != null)
+        {
             mListener.onFragmentInteraction(uri);
         }
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(Activity activity)
+    {
         super.onAttach(activity);
-        try {
+        try
+        {
             mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
+        }
+        catch (ClassCastException e)
+        {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
     }
 
     @Override
-    public void onDetach() {
+    public void onDetach()
+    {
         super.onDetach();
         mListener = null;
     }
@@ -164,10 +208,12 @@ public class HomeFragment extends android.support.v4.app.Fragment {
      * activity.
      * <p/>
      * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * "http://developer.android.com/training/basics/fragments/communicating
+     * .html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnFragmentInteractionListener
+    {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }

@@ -3,6 +3,7 @@ package bitpot.aboutcanada;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,12 +13,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +42,8 @@ public class MainActivity extends AppCompatActivity
         LandmarksFragment.OnFragmentInteractionListener,
         CanadaFragment.OnFragmentInteractionListener,
         TransBlankFragment.OnFragmentInteractionListener
-{ 
+//        ProvincesCapitalsFragment.OnFragmentInteractionListener
+{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the
@@ -76,7 +86,6 @@ public class MainActivity extends AppCompatActivity
         MONTHS_MAP.put("NOVEMBER", 10);
         MONTHS_MAP.put("DECEMBER", 11);
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -137,7 +146,8 @@ public class MainActivity extends AppCompatActivity
 
         Calendar date10 = Calendar.getInstance();
         date10.set(2015, MONTHS_MAP.get("NOVEMBER"), 11);
-        holidayDatesMap.put(date10, getText(R.string.remembrance_day).toString());
+        holidayDatesMap.put(date10, getText(R.string.remembrance_day)
+                .toString());
 
         Calendar date11 = Calendar.getInstance();
         date11.set(2015, MONTHS_MAP.get("DECEMBER"), 25);
@@ -177,7 +187,8 @@ public class MainActivity extends AppCompatActivity
                 notifyHoliday = new Notification.Builder(this)
                         .setContentTitle("Today is " + holiday + "!")
                         .setSmallIcon(R.drawable.action_bar_icon)
-                        .setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R
+                        .setSound(Uri.parse("android.resource://" +
+                                getPackageName() + "/" + R
                                 .raw.sorry));
 
                 NM.notify(1, notifyHoliday.getNotification());
@@ -186,6 +197,126 @@ public class MainActivity extends AppCompatActivity
 
         mediaPlayer = MediaPlayer.create(this.getBaseContext(),
                 R.raw.ocanada);
+
+//        TextView home_TxtVw = (TextView) findViewById(R.id.txtVw_home);
+//        home_TxtVw.setText(readTxt((LinearLayout) findViewById(R.id
+// .home_ll)));
+//
+//        readTxt((LinearLayout) findViewById(R.id.home_ll));
+
+//        TextView home_TxtVw = new TextView(this);
+//        home_TxtVw.setText("Welcome!");
+//
+//        DrawerLayout dl = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        dl.addView(home_TxtVw);
+
+        // update the main content by replacing fragments
+        android.support.v4.app.FragmentTransaction fragmentTransaction =
+                getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container, new
+                HomeFragment()).commit();
+    }
+
+    private String readTxt(LinearLayout ll)
+    {
+        InputStream inputStream = getResources().openRawResource(R.raw.home);
+        ByteArrayOutputStream byteAOS = new ByteArrayOutputStream();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader
+                (inputStream));
+        String line;
+        String entireFile = "";
+
+        int i;
+
+        try
+        {
+            i = inputStream.read();
+            while (i != -1)
+            {
+                byteAOS.write(i);
+                i = inputStream.read();
+            }
+
+            while ((line = br.readLine()) != null)
+            { // <--------- place readLine() inside loop
+                // entireFile += (line + "\n"); // <---------- add each line
+                // to entireFile
+                TextView tv = new TextView(this);
+                if (line.length() > 0)
+                {
+                    tv.setText(line.substring(3, line.length()));
+                }
+                Calendar c = Calendar.getInstance();
+                int seconds = c.get(Calendar.SECOND);
+
+                ViewGroup.LayoutParams layout = new ViewGroup.LayoutParams
+                        (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+                                .LayoutParams.MATCH_PARENT);
+                if (line.length() <= 0)
+                {
+
+                } else
+                {
+
+                    if (line.substring(0, 3).equals("H--"))
+                    {
+                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+                        tv.setTextColor(Color.parseColor(getResources()
+                                .getString(R.string.font_header)));
+                        tv.setPadding((int) (15 * getResources()
+                                        .getDisplayMetrics().density), (int)
+                                        (5 *
+                                                getResources()
+                                                        .getDisplayMetrics()
+                                                        .density),
+                                (int) (15 * getResources().getDisplayMetrics
+                                        ().density), (int) (5 * getResources
+                                        ().getDisplayMetrics().density));
+                    } else if (line.substring(0, 3).equals("P--"))
+                    {
+                        tv.setText("   • " + line.substring(3, line.length()));
+                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                        tv.setTextColor(Color.parseColor(getResources()
+                                .getString(R.string.font_body)));
+                        tv.setPadding((int) (10 * getResources()
+                                .getDisplayMetrics().density), 0, (int) (10 *
+                                getResources().getDisplayMetrics().density), 0);
+                    } else
+                    {
+                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                        tv.setTextColor(Color.parseColor(getResources()
+                                .getString(R.string.font_body)));
+                        tv.setPadding((int) (10 * getResources()
+                                .getDisplayMetrics().density), 0, (int) (10 *
+                                getResources().getDisplayMetrics().density), 0);
+                    }
+                    tv.setLayoutParams(layout);
+                    ll.addView(tv);
+                    if (line.substring(0, 3).equals("H--"))
+                    {
+                        View lineDr = new View(this);
+                        ViewGroup.LayoutParams linelay = new ViewGroup
+                                .LayoutParams(ViewGroup.LayoutParams
+                                .MATCH_PARENT, 1);
+                        lineDr.setLayoutParams(linelay);
+                        lineDr.setBackgroundColor(Color.parseColor
+                                (getResources().getString(R.string
+                                        .line_header)));
+                        ll.addView(lineDr);
+                    }
+                }
+            }
+
+
+            inputStream.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return byteAOS.toString();
     }
 
 
@@ -218,31 +349,31 @@ public class MainActivity extends AppCompatActivity
         switch (number)
         {
             case 1:
-                mTitle = getString(R.string.title_section1);
+                mTitle = getString(R.string.title_home);
                 break;
             case 2:
-                mTitle = getString(R.string.title_section2);
+                mTitle = getString(R.string.title_aboutCanada);
                 break;
             case 3:
-                mTitle = getString(R.string.title_section3);
+                mTitle = getString(R.string.title_city);
                 break;
             case 4:
-                mTitle = getString(R.string.title_section4);
+                mTitle = getString(R.string.title_socialCulture);
                 break;
             case 5:
-                mTitle = getString(R.string.title_section5);
+                mTitle = getString(R.string.title_holidays);
                 break;
             case 6:
-                mTitle = getString(R.string.title_section6);
+                mTitle = getString(R.string.title_currency);
                 break;
             case 7:
-                mTitle = getString(R.string.title_section7);
+                mTitle = getString(R.string.title_landmarks);
                 break;
             case 8:
-                mTitle = getString(R.string.title_section8);
+                mTitle = getString(R.string.title_translations);
                 break;
             case 9:
-                mTitle = getString(R.string.title_section9);
+                mTitle = getString(R.string.title_anthem);
                 break;
         }
     }
@@ -296,8 +427,7 @@ public class MainActivity extends AppCompatActivity
         {
             Log.d("YOY ", "Inside if");
             mediaPlayer.start();
-        }
-        else if (NUM_O_CANADA % 2 == 0)
+        } else if (NUM_O_CANADA % 2 == 0)
         {
             Log.d("YOY ", "Inside else if");
             mediaPlayer.pause();
@@ -346,6 +476,9 @@ public class MainActivity extends AppCompatActivity
         {
             View rootView = inflater.inflate(R.layout.fragment_main,
                     container, false);
+
+//            dispFileText((LinearLayout) rootView.findViewById(R.id
+// .fragCityLinLay));
             return rootView;
         }
 
@@ -356,6 +489,97 @@ public class MainActivity extends AppCompatActivity
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+
+        public void dispFileText(LinearLayout ll)
+        {
+            InputStream is = getResources().openRawResource(R.raw.aboutcanada);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String line;
+            String entireFile = "";
+
+            try
+            {
+                while ((line = br.readLine()) != null)
+                {
+                    entireFile += (line + "\n");
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
     }
+
+//
+//    public void dispFileText(LinearLayout ll){
+//        InputStream is = getResources().openRawResource(R.raw.home);
+//        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+//        String line;
+//        String entireFile = "";
+//
+//        try {
+//            while((line = br.readLine()) != null) { // <--------- place
+// readLine() inside loop
+//                // entireFile += (line + "\n"); // <---------- add each
+// line to entireFile
+//                TextView tv = new TextView(getApplicationContext());
+//                if (line.length() > 0) {
+//                    tv.setText(line.substring(3, line.length()));
+//                }
+//                Calendar c = Calendar.getInstance();
+//                int seconds = c.get(Calendar.SECOND);
+//
+//                ViewGroup.LayoutParams layout = new ViewGroup.LayoutParams
+// (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//                if (line.length() <= 0) {
+//
+//                }
+//                else {
+//
+//                    if (line.substring(0, 3).equals("H--")) {
+//                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+//                        tv.setTextColor(Color.parseColor(getResources()
+//                                .getString(R.string.font_header)));
+//                        tv.setPadding((int) (15 * getResources()
+// .getDisplayMetrics().density), (int) (5 * getResources().getDisplayMetrics
+// ().density), (int) (15 * getResources().getDisplayMetrics().density),
+// (int) (5 * getResources().getDisplayMetrics().density));
+//                    } else if (line.substring(0, 3).equals("P--")) {
+//                        tv.setText("   • " + line.substring(3, line.length
+// ()));
+//                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+//                        tv.setTextColor(Color.parseColor(getResources()
+// .getString(R.string.font_body)));
+//                        tv.setPadding((int) (10 * getResources()
+// .getDisplayMetrics().density), 0, (int) (10 * getResources()
+// .getDisplayMetrics().density), 0);
+//                    } else {
+//                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+//                        tv.setTextColor(Color.parseColor(getResources()
+// .getString(R.string.font_body)));
+//                        tv.setPadding((int) (10 * getResources()
+// .getDisplayMetrics().density), 0, (int) (10 * getResources()
+// .getDisplayMetrics().density), 0);
+//                    }
+//                    tv.setLayoutParams(layout);
+//                    ll.addView(tv);
+//                    if (line.substring(0, 3).equals("H--")) {
+//                        View lineDr = new View(getApplicationContext());
+//                        ViewGroup.LayoutParams linelay = new ViewGroup
+// .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+//                        lineDr.setLayoutParams(linelay);
+//                        lineDr.setBackgroundColor(Color.parseColor
+// (getResources().getString(R.string.line_header)));
+//                        ll.addView(lineDr);
+//                    }
+//                }
+//            }
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//    }
 
 }

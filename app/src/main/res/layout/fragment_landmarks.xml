@@ -1,17 +1,20 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="bitpot.aboutcanada.LandmarksFragment">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="bitpot.aboutcanada.LandmarksFragment">
+
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
         <LinearLayout
-            android:id ="@+id/fragCityLinLay"
+            android:id="@+id/fragCityLinLay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center|left"
-            android:orientation="vertical" >
-
+            android:orientation="vertical">
         </LinearLayout>
+
     </ScrollView>
 </FrameLayout>

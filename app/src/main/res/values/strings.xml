@@ -1,15 +1,16 @@
 <resources>
     <string name="app_name">Welcome to Canada</string>
 
-    <string name="title_section1">Home</string>
-    <string name="title_section2">About Canada</string>
-    <string name="title_section3">What\'s in a city?</string>
-    <string name="title_section4">Social Habits and Culture</string>
-    <string name="title_section5">Holidays</string>
-    <string name="title_section6">Finance and Currency</string>
-    <string name="title_section7">Landmarks</string>
-    <string name="title_section8">Translations</string>
-    <string name="title_section9">National Anthem</string>
+    <string name="title_home">Home</string>
+    <string name="title_aboutCanada">About Canada</string>
+    <string name="title_provincesCapitals">Provinces and Capitals</string>
+    <string name="title_city">What\'s in a city?</string>
+    <string name="title_socialCulture">Social Habits and Culture</string>
+    <string name="title_holidays">Holidays</string>
+    <string name="title_currency">Finance and Currency</string>
+    <string name="title_landmarks">Landmarks</string>
+    <string name="title_translations">Translations</string>
+    <string name="title_anthem">National Anthem</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -18,7 +19,7 @@
 
     <string name="action_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="title_activity_welcome">WelcomeActivity</string>

@@ -1,30 +1,19 @@
 package bitpot.aboutcanada;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import java.io.*;
 import android.graphics.Color;
-import java.lang.reflect.Type;
 
 import android.util.TypedValue;
 import android.view.ViewGroup.*;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.view.ViewGroup;
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-
 
 
 /**
@@ -82,13 +71,13 @@ public class AboutCitiesFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about_cities, null);
-        DispFileText((LinearLayout) view.findViewById(R.id.fragCityLinLay));
+        dispFileText((LinearLayout) view.findViewById(R.id.fragCityLinLay));
         return view;
     }
 
 
 
-    public void DispFileText(LinearLayout ll){
+    public void dispFileText(LinearLayout ll){
         InputStream is = getResources().openRawResource(R.raw.cities);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String line;

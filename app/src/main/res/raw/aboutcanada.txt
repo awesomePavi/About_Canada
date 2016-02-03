@@ -1,20 +1,34 @@
 H--About Canada
 B--Welcome to Canada! Here are some quick facts about Canada:
 P--Canada was founded in July 1st, 1867
+P--The capital of Canada is Ottawa, Ontario
 
 H--Canada's Province's:
-P--Nova Scotia
-P--Prince Edward Island
-P--New Brunswick
-P--Newfoundland and Labrador
-P--Quebec
-P--Ontario
-P--Manitoba
-P--Sasketchwan
-P--Alberta
-P--British Columbia
+B--Nova Scotia
+P--Capital: Halifax
+B--Prince Edward Island
+P--Capital: Charlottetown
+B--New Brunswick
+P--Capital: Fredericton
+B--Newfoundland and Labrador
+P--Capital: St. John's
+B--Quebec
+P--Capital: Quebec City
+B--Ontario
+P--Capital: Toronto
+B--Manitoba
+P--Capital: Winnipeg
+B--Sasketchwan
+P--Capital: Regina
+B--Alberta
+P--Capital: Edmonton
+B--British Columbia
+P--Capital: Victoria
 
 H--Canada Territories:
-P--Nunavut
-P--Northwest Territories
-P--Yukon
+B--Nunavut
+P--Capital: Iqaluit
+B--Northwest Territories
+P--Capital: Yellowknife
+B--Yukon
+P--Capital: Whitehorse
